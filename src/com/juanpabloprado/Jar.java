@@ -4,16 +4,16 @@ import java.util.Random;
 
 public class Jar {
   private final Random random;
-  private String type;
+  private String itemName;
   private int randomNumber;
   private int capacity;
 
   public Jar(String itemName, int capacity) {
     if (capacity > Game.MAX_ITEMS_ALLOWED) {
-      throw new IllegalArgumentException("Specify a capacity stays in the bounds of reality");
+      throw new IllegalArgumentException("Specify a capacity that stays in the bounds of reality");
     }
     this.capacity = capacity;
-    this.type = itemName;
+    this.itemName = itemName;
     random = new Random();
   }
 
@@ -21,8 +21,8 @@ public class Jar {
     randomNumber = random.nextInt(capacity) + 1;
   }
 
-  public String getType() {
-    return type;
+  public String getItemName() {
+    return itemName;
   }
 
   public int getCapacity() {

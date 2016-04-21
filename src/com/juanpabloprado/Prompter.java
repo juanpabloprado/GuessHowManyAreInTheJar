@@ -1,31 +1,68 @@
 package com.juanpabloprado;
 
 import java.io.Console;
+import java.util.Set;
 
 public class Prompter {
 
   private static final Console console = System.console();
+  private Set<Integer> attempts;
+  private int max;
+  private String itemName;
+
+  public Prompter(Set<Integer> attempts) {
+    this.attempts = attempts;
+  }
 
   public int promptForGuess() {
-    String s = console.readLine("What is the number of items stored in the jar? ");
+    String s = console.readLine("%nWhat is the number of items stored in the jar? ");
     return Integer.parseInt(s);
+  }
+
+  public void displayWelcome() {
+    CharSequence separator = "\n=============\n";
+    System.out.printf("Time to guess the random number! %s", separator);
   }
 
   public void displayProgress(String hint) {
-    System.out.printf("Your guess is %s%n", hint);
+    //System.out.printf("%s%n", toString());
+    System.out.printf("Your guess is %s", hint);
+    displayMax();
   }
 
-  public String promptForJar() {
-    return console.readLine("What type of item do you want to store in the jar? ");
+  private void displayMax() {
+    System.out.printf("\t\tRemember the maximum number of %s is %d%n", itemName, max);
   }
 
-  public int promptForMax() {
+
+  public void promptForJar() {
+    itemName = console.readLine("What type of item do you want to store in the jar? ");
+  }
+
+  public void promptForMax() {
     String s = console.readLine("What would be the maximum number of items for filling the jar? ");
-    return Integer.parseInt(s);
+    max = Integer.parseInt(s);
   }
 
   public void printStats(String jarType, int tries) {
-    System.out.printf("You guess the random number of %s in %d trie%s", jarType, tries,
-        tries > 1 ? "s" : "");
+    System.out.printf("%nGreat work! It took you %d attempt%s to guess the random number of %s",
+        tries,
+        tries > 1 ? "s" : "", jarType);
+  }
+
+  public int getMax() {
+    return max;
+  }
+
+  public String getItemName() {
+    return itemName;
+  }
+
+  @Override public String toString() {
+    return "Prompter{" +
+        "attempts=" + attempts +
+        ", max=" + max +
+        ", itemName='" + itemName + '\'' +
+        '}';
   }
 }
