@@ -18,7 +18,7 @@ public class Jar {
   }
 
   public void fill() {
-    randomNumber = random.nextInt(capacity + 1);
+    randomNumber = random.nextInt(capacity) + 1;
   }
 
   public String getType() {
