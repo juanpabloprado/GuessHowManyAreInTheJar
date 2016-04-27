@@ -8,6 +8,7 @@ public class GameHelper {
   private Set<Integer> tries;
   private Prompter prompter;
   private int currentGuess;
+  private int highScore;
 
   public GameHelper() {
     onStart();
@@ -27,12 +28,29 @@ public class GameHelper {
     do {
       keepGuessing();
     } while (isGuessDifferent());
-    prompter.printStats(jar.getItemName(), tries.size());
-    boolean isPlayingAgain = prompter.promptForPlayingAgain();
-    if(isPlayingAgain) {
-      prompter.displayWelcomeAgain();
-      play();
+
+    int score = tries.size();
+    //System.out.printf(String.valueOf(highScore));
+    if(isHighScoreBeaten(score)) {
+      highScore = score;
+      prompter.printNewHighScore(highScore);
     }
+
+    prompter.printStats(jar.getItemName(), score);
+    boolean isPlayingAgain = prompter.promptForPlayingAgain();
+    if (isPlayingAgain) {
+      playAgain();
+    }
+  }
+
+  private boolean isHighScoreBeaten(int score) {
+    return highScore == 0 || highScore > score;
+  }
+
+  private void playAgain() {
+    prompter.displayWelcomeAgain();
+    tries.clear();
+    play();
   }
 
   private boolean isGuessDifferent() {
@@ -42,12 +60,16 @@ public class GameHelper {
   private void keepGuessing() {
     currentGuess = prompter.promptForGuess();
     tries.add(currentGuess);
-    if (isHigh()) {
-      prompter.displayProgress("too high!");
-    } else if (isLow()) {
-      prompter.displayProgress("too low!");
+    if (currentGuess > jar.getCapacity()) {
+      prompter.displayProgress("over the maximum amount." + jar.getCapacity());
     } else {
-      prompter.displayProgress("correct! :)");
+      if (isHigh()) {
+        prompter.displayProgress("too high!");
+      } else if (isLow()) {
+        prompter.displayProgress("too low!");
+      } else {
+        prompter.displayProgress("correct! :)");
+      }
     }
   }
 

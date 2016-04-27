@@ -74,4 +74,8 @@ public class Prompter {
   public void displayWelcomeAgain() {
     System.out.printf("%nThe jar has been filled randomly again, good luck!%n");
   }
+
+  public void printNewHighScore(int highscore) {
+    System.out.printf("%nNEW HIGH SCORE: %s%n", highscore);
+  }
 }
