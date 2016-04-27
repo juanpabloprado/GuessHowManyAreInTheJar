@@ -28,6 +28,11 @@ public class GameHelper {
       keepGuessing();
     } while (isGuessDifferent());
     prompter.printStats(jar.getItemName(), tries.size());
+    boolean isPlayingAgain = prompter.promptForPlayingAgain();
+    if(isPlayingAgain) {
+      prompter.displayWelcomeAgain();
+      play();
+    }
   }
 
   private boolean isGuessDifferent() {
@@ -37,20 +42,20 @@ public class GameHelper {
   private void keepGuessing() {
     currentGuess = prompter.promptForGuess();
     tries.add(currentGuess);
-    if (isHigh(currentGuess)) {
+    if (isHigh()) {
       prompter.displayProgress("too high!");
-    } else if (isLow(currentGuess)) {
+    } else if (isLow()) {
       prompter.displayProgress("too low!");
     } else {
       prompter.displayProgress("correct! :)");
     }
   }
 
-  private boolean isLow(int currentGuess) {
+  private boolean isLow() {
     return currentGuess < jar.getNumber();
   }
 
-  private boolean isHigh(int currentGuess) {
+  private boolean isHigh() {
     return currentGuess > jar.getNumber();
   }
 }

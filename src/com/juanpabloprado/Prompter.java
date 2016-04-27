@@ -21,7 +21,7 @@ public class Prompter {
 
   public void displayWelcome() {
     CharSequence separator = "\n=============\n";
-    System.out.printf("Time to guess the random number! %s", separator);
+    System.out.printf("%nTime to guess the random number! %s", separator);
   }
 
   public void displayProgress(String hint) {
@@ -45,7 +45,7 @@ public class Prompter {
   }
 
   public void printStats(String jarType, int tries) {
-    System.out.printf("%nGreat work! It took you %d attempt%s to guess the random number of %s",
+    System.out.printf("%nGreat work! It took you %d attempt%s to guess the random number of %s%n",
         tries,
         tries > 1 ? "s" : "", jarType);
   }
@@ -64,5 +64,14 @@ public class Prompter {
         ", max=" + max +
         ", itemName='" + itemName + '\'' +
         '}';
+  }
+
+  public boolean promptForPlayingAgain() {
+    String s = console.readLine("Do you want to play again? (Y/n)");
+    return s.equals("") || s.equals("Y") || s.equals("y");
+  }
+
+  public void displayWelcomeAgain() {
+    System.out.printf("%nThe jar has been filled randomly again, good luck!%n");
   }
 }
